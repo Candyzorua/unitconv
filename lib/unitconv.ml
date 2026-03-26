@@ -6,6 +6,7 @@ type unit_name =
   | M
   | Ft
   | In
+[@@deriving enumerate]
 
 let unit_to_string = function
   | Mm -> "mm"
@@ -35,4 +36,4 @@ let convert value from_unit to_unit =
   meters /. unit_to_meters to_unit
 
 let supported_units =
-  [ Mm; Cm; M; Ft; In ] |> List.map ~f:unit_to_string |> String.concat ~sep:", "
+  all_of_unit_name |> List.map ~f:unit_to_string |> String.concat ~sep:", "

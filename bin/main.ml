@@ -17,9 +17,15 @@ let command =
     (let%map_open.Command value =
        Command.Param.anon ("value" %: float)
      and from_unit =
-       Command.Param.anon ("from-unit" %: unit_arg)
+       Command.Param.flag
+         "from"
+         (Command.Param.required unit_arg)
+         ~doc:"UNIT Source unit"
      and to_unit =
-       Command.Param.anon ("to-unit" %: unit_arg) in
+       Command.Param.flag
+         "to"
+         (Command.Param.required unit_arg)
+         ~doc:"UNIT Target unit" in
      fun () ->
        let result = Unitconv.convert value from_unit to_unit in
        printf "%.6f %s\n" result (Unitconv.unit_to_string to_unit))
