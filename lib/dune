@@ -1,2 +1,3 @@
 (library
- (name unitconv))
+ (name unitconv)
+ (libraries core))

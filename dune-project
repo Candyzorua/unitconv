@@ -19,7 +19,11 @@
  (name unitconv)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends ocaml)
+ (depends
+  ocaml
+  core
+  core_unix
+  ppx_jane)
  (tags
   ("add topics" "to describe" your project)))
 
