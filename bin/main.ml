@@ -13,7 +13,7 @@ let unit_arg =
 
 let command =
   Command.basic
-    ~summary:"Convert between mm, cm, m, ft, and in"
+    ~summary:"Convert between supported length and mass units"
     (let%map_open.Command value =
        Command.Param.anon ("value" %: float)
      and from_unit =

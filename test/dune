@@ -1,3 +1,6 @@
-(test
+(library
  (name test_unitconv)
- (libraries core unitconv))
+ (libraries core unitconv)
+ (inline_tests)
+ (preprocess
+  (pps ppx_jane)))

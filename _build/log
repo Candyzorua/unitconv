@@ -1,6 +1,16 @@
-# dune init proj unitconv
+# dune exec unitconv -- 16 -from lbs -to kg
 # OCAMLPARAM: unset
 # Shared cache: enabled-except-user-rules
 # Shared cache location: /Users/jiayingong/.cache/dune/db
 # Workspace root: /Users/jiayingong/Documents/Coding/unitconv
 # Auto-detected concurrency: 8
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /Users/jiayingong/.opam/rwo/bin/ocamlc.opt -config > /var/folders/lf/wwp44lc51q1d4j833_5lcr_r0000gn/T/dune_7d6a5a_output
