@@ -1,0 +1,6 @@
+# dune init proj unitconv
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /Users/jiayingong/.cache/dune/db
+# Workspace root: /Users/jiayingong/Documents/Coding/unitconv
+# Auto-detected concurrency: 8
