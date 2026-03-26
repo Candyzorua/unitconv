@@ -1,0 +1,14 @@
+_build/
+*.install
+*.merlin
+*.cmi
+*.cmo
+*.cmx
+*.cmxa
+*.cmxs
+*.o
+*.a
+*.so
+*.swp
+*.swo
+.DS_Store
