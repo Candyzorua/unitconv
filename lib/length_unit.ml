@@ -7,22 +7,12 @@ module Definition = struct
     | M
     | Ft
     | In
-  [@@deriving enumerate]
+  [@@deriving enumerate, sexp]
 
-  let to_string = function
-    | Mm -> "mm"
-    | Cm -> "cm"
-    | M -> "m"
-    | Ft -> "ft"
-    | In -> "in"
+  let to_string unit = Sexp.to_string (sexp_of_t unit)
 
   let parse value =
-    match String.lowercase value with
-    | "mm" -> Some Mm
-    | "cm" -> Some Cm
-    | "m" -> Some M
-    | "ft" -> Some Ft
-    | "in" -> Some In
+    try Some (t_of_sexp (Sexp.Atom value)) with
     | _ -> None
 
   let unit_scale = function

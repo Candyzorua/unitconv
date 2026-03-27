@@ -1,4 +1,4 @@
-# dune exec unitconv -- 16 -from lbs -to kg
+# dune exec unitconv -- 2 -from Lbs -to Oz
 # OCAMLPARAM: unset
 # Shared cache: enabled-except-user-rules
 # Shared cache location: /Users/jiayingong/.cache/dune/db
@@ -13,4 +13,4 @@
 #  ; build_dir = In_build_dir "default"
 #  ; instrument_with = []
 #  }
-$ /Users/jiayingong/.opam/rwo/bin/ocamlc.opt -config > /var/folders/lf/wwp44lc51q1d4j833_5lcr_r0000gn/T/dune_c26bf8_output
+$ /Users/jiayingong/.opam/rwo/bin/ocamlc.opt -config > /var/folders/lf/wwp44lc51q1d4j833_5lcr_r0000gn/T/dune_8d9246_output

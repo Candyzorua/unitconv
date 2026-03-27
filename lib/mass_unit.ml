@@ -7,22 +7,12 @@ module Definition = struct
     | G
     | Oz
     | T
-  [@@deriving enumerate]
+  [@@deriving enumerate, sexp]
 
-  let to_string = function
-    | Kg -> "kg"
-    | Lbs -> "lbs"
-    | G -> "g"
-    | Oz -> "oz"
-    | T -> "t"
+  let to_string unit = Sexp.to_string (sexp_of_t unit)
 
   let parse value =
-    match String.lowercase value with
-    | "kg" -> Some Kg
-    | "lbs" -> Some Lbs
-    | "g" -> Some G
-    | "oz" -> Some Oz
-    | "t" -> Some T
+    try Some (t_of_sexp (Sexp.Atom value)) with
     | _ -> None
 
   let unit_scale = function
