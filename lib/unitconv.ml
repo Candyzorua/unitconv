@@ -15,19 +15,17 @@ let supported_units_for_type unit_type =
 let convert unit_type value ~from_unit ~to_unit =
   match Unit_query_parser.find unit_type with
   | None ->
-      failwithf
+      Or_error.errorf
         "Unsupported unit type %S. Supported unit types: %s"
         unit_type
         supported_unit_types
-        ()
   | Some (T (module Unit)) -> (
       match Unit.parse from_unit, Unit.parse to_unit with
       | Some from_unit, Some to_unit ->
           let result = Unit.convert value from_unit to_unit in
-          result, Unit.to_string to_unit
+          Ok (result, Unit.to_string to_unit)
       | _ ->
-          failwithf
+          Or_error.errorf
             "Unsupported unit for type %S. Supported units: %s"
             unit_type
-            Unit.supported_units
-            ())
+            Unit.supported_units)
