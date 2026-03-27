@@ -1,6 +1,8 @@
 open! Core
 
 module Definition = struct
+  let name = "mass"
+
   type t =
     | Kg
     | Lbs

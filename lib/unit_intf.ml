@@ -3,6 +3,7 @@ open! Core
 module type Basic = sig
   type t
 
+  val name : string
   val all : t list
   val to_string : t -> string
   val parse : string -> t option
@@ -12,6 +13,7 @@ end
 module type S = sig
   type t
 
+  val name : string
   val all : t list
   val to_string : t -> string
   val parse : string -> t option

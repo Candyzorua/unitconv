@@ -2,42 +2,32 @@ open! Core
 
 module Length_unit = Length_unit
 module Mass_unit = Mass_unit
+module Unit_query_parser = Unit_query_parser
 
-type unit_name =
-  | Length of Length_unit.t
-  | Mass of Mass_unit.t
+let supported_unit_types =
+  Unit_query_parser.supported_unit_types () |> String.concat ~sep:", "
 
-type unit_kind =
-  | Length_kind
-  | Mass_kind
-[@@deriving equal]
+let supported_units_for_type unit_type =
+  match Unit_query_parser.find unit_type with
+  | None -> None
+  | Some (T (module Unit)) -> Some Unit.supported_units
 
-let unit_to_string = function
-  | Length unit -> Length_unit.to_string unit
-  | Mass unit -> Mass_unit.to_string unit
-
-let parse_unit value =
-  match Length_unit.parse value with
-  | Some unit -> Some (Length unit)
-  | None -> Option.map (Mass_unit.parse value) ~f:(fun unit -> Mass unit)
-
-let unit_kind = function
-  | Length _ -> Length_kind
-  | Mass _ -> Mass_kind
-
-let convert value from_unit to_unit =
-  match from_unit, to_unit with
-  | Length from_unit, Length to_unit ->
-      Length_unit.convert value from_unit to_unit
-  | Mass from_unit, Mass to_unit -> Mass_unit.convert value from_unit to_unit
-  | _ ->
+let convert unit_type value ~from_unit ~to_unit =
+  match Unit_query_parser.find unit_type with
+  | None ->
       failwithf
-        "Cannot convert between %s and %s because they are different unit types"
-        (unit_to_string from_unit)
-        (unit_to_string to_unit)
+        "Unsupported unit type %S. Supported unit types: %s"
+        unit_type
+        supported_unit_types
         ()
-
-let supported_units =
-  String.concat
-    ~sep:", "
-    [ Length_unit.supported_units; Mass_unit.supported_units ]
+  | Some (T (module Unit)) -> (
+      match Unit.parse from_unit, Unit.parse to_unit with
+      | Some from_unit, Some to_unit ->
+          let result = Unit.convert value from_unit to_unit in
+          result, Unit.to_string to_unit
+      | _ ->
+          failwithf
+            "Unsupported unit for type %S. Supported units: %s"
+            unit_type
+            Unit.supported_units
+            ())

@@ -1,20 +1,25 @@
 open! Core
 
 let unit_arg =
+  Command.Arg_type.create Fn.id
+
+let unit_type_arg =
   Command.Arg_type.create (fun value ->
-      match Unitconv.parse_unit value with
-      | Some unit_name -> unit_name
+      match Unitconv.supported_units_for_type value with
+      | Some _ -> String.lowercase value
       | None ->
           failwithf
-            "Unsupported unit %S. Supported units: %s"
+            "Unsupported unit type %S. Supported unit types: %s"
             value
-            Unitconv.supported_units
+            Unitconv.supported_unit_types
             ())
 
 let command =
   Command.basic
-    ~summary:"Convert between supported length and mass units"
-    (let%map_open.Command value =
+    ~summary:"Convert between units within a selected unit type"
+    (let%map_open.Command unit_type =
+       Command.Param.anon ("type" %: unit_type_arg)
+     and value =
        Command.Param.anon ("value" %: float)
      and from_unit =
        Command.Param.flag
@@ -27,7 +32,9 @@ let command =
          (Command.Param.required unit_arg)
          ~doc:"UNIT Target unit" in
      fun () ->
-       let result = Unitconv.convert value from_unit to_unit in
-       printf "%.6f %s\n" result (Unitconv.unit_to_string to_unit))
+       let result, target_unit =
+         Unitconv.convert unit_type value ~from_unit ~to_unit
+       in
+       printf "%.6f %s\n" result target_unit)
 
 let () = Command_unix.run command

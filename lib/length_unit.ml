@@ -1,6 +1,8 @@
 open! Core
 
 module Definition = struct
+  let name = "length"
+
   type t =
     | Mm
     | Cm
